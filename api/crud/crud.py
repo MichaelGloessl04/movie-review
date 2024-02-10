@@ -114,6 +114,72 @@ class Crud:
                         death_date=death_date,
                         country_of_origin=country_of_origin))
 
+    def get_reviews(self, id: int = None) -> list[Review]:
+        """
+        Retrieves a list of reviews from the database.
+
+        Args:
+            id (int, optional): The ID of the review to retrieve.
+            Defaults to None.
+
+        Returns:
+            list[Review]: A list of Review objects.
+        """
+        return self._get(Review, id)
+
+    def add_review(self,
+                   rating: int,
+                   review: str,
+                   movie_id: int,
+                   user_id: int) -> Review:
+        """
+        Adds a new review to the database.
+
+        Args:
+            rating (int): The rating of the review.
+            review (str): The review text.
+            movie_id (int): The ID of the movie associated with the review.
+            user_id (int): The ID of the user associated with the review.
+
+        Returns:
+            Review: The newly added Review object.
+        """
+        return self._add(Review(
+                        rating=rating,
+                        review=review,
+                        movie_id=movie_id,
+                        user_id=user_id))
+
+    def get_users(self, id: int = None) -> list[User]:
+        """
+        Retrieves a list of users from the database.
+
+        Args:
+            id (int, optional): The ID of the user to retrieve.
+            Defaults to None.
+
+        Returns:
+            list[User]: A list of User objects.
+        """
+        return self._get(User, id)
+
+    def add_user(self, username: str, email: str, password: str) -> User:
+        """
+        Adds a new user to the database.
+
+        Args:
+            username (str): The username of the user.
+            email (str): The email of the user.
+            password (str): The password of the user.
+
+        Returns:
+            User: The newly added User object.
+        """
+        return self._add(User(
+                        username=username,
+                        email=email,
+                        password=password))
+
     def _add(self, obj: Base):
         with Session(self._engine) as session:
             session.add(obj)

@@ -1,4 +1,4 @@
-from api.crud.models import Movie, Genre, Director
+from api.crud.models import Movie, Genre, Director, User, Review
 
 MOVIES = [
         {
@@ -53,6 +53,23 @@ DIRECTORS = [
         },
     ]
 
+USER = [
+        {
+            "username": "user1",
+            "email": "email1",
+            "password": "password1",
+        }
+    ]
+
+REVIEW = [
+        {
+            "rating": 5,
+            "review": "Great movie",
+            "movie_id": 1,
+            "user_id": 1,
+        }
+    ]
+
 
 def populate(session, obj):
     mock_values = []
@@ -62,6 +79,10 @@ def populate(session, obj):
         mock_values = GENRES
     elif obj == Director:
         mock_values = DIRECTORS
+    elif obj == User:
+        mock_values = USER
+    elif obj == Review:
+        mock_values = REVIEW
     with session() as session:
         for movie in mock_values:
             session.add(obj(**movie))

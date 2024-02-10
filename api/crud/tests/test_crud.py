@@ -2,14 +2,14 @@ from typing import Tuple
 from sqlalchemy.orm import Session
 
 from api.crud.crud import Crud
-from api.crud.tests.populate import MOVIES, GENRES, DIRECTORS
+from api.crud.tests.populate import MOVIES, GENRES, DIRECTORS, USER, REVIEW
 
 
 def test_get_movies(crud_session_in_memory: Tuple[Crud, Session]):
     crud_in_memory, session = crud_session_in_memory
 
     movies = crud_in_memory.get_movies()
-    assert len(movies) == 3
+    assert len(movies) == len(MOVIES)
     for movie, expected in zip(movies, MOVIES):
         for key, value in expected.items():
             assert getattr(movie, key) == value
@@ -22,33 +22,30 @@ def test_get_movies(crud_session_in_memory: Tuple[Crud, Session]):
 def test_add_movie(crud_session_in_memory: Tuple[Crud, Session]):
     crud_in_memory, _ = crud_session_in_memory
 
-    movie = crud_in_memory.add_movie(
-        "The Matrix",
-        "matrix.jpg",
-        19990331,
-        2,
-        4,
-    )
-    assert movie.name == "The Matrix"
-    assert movie.poster_file == "matrix.jpg"
-    assert movie.release_date == 19990331
-    assert movie.genre_id == 2
-    assert movie.director_id == 4
+    new_movie = {
+        "name": "The Matrix",
+        "poster_file": "the_matrix.jpg",
+        "release_date": 19990331,
+        "genre_id": 1,
+        "director_id": 1
+    }
+
+    movie = crud_in_memory.add_movie(**new_movie)
+
+    for key, value in new_movie.items():
+        assert getattr(movie, key) == value
 
     movies = crud_in_memory.get_movies()
-    assert len(movies) == 4
-    assert movies[-1].name == "The Matrix"
-    assert movies[-1].poster_file == "matrix.jpg"
-    assert movies[-1].release_date == 19990331
-    assert movies[-1].genre_id == 2
-    assert movies[-1].director_id == 4
+    assert len(movies) == len(MOVIES) + 1
+    for key, value in new_movie.items():
+        assert getattr(movies[-1], key) == value
 
 
 def test_get_genres(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, _ = crud_session_in_memory
+    crud_in_memory, session = crud_session_in_memory
 
     genres = crud_in_memory.get_genres()
-    assert len(genres) == 2
+    assert len(genres) == len(GENRES)
     for genre, expected in zip(genres, GENRES):
         for key, value in expected.items():
             assert getattr(genre, key) == value
@@ -61,19 +58,24 @@ def test_get_genres(crud_session_in_memory: Tuple[Crud, Session]):
 def test_add_genre(crud_session_in_memory: Tuple[Crud, Session]):
     crud_in_memory, _ = crud_session_in_memory
 
-    genre = crud_in_memory.add_genre("Science Fiction")
-    assert genre.name == "Science Fiction"
+    new_genre = {"name": "Sci-Fi"}
+
+    genre = crud_in_memory.add_genre(**new_genre)
+
+    for key, value in new_genre.items():
+        assert getattr(genre, key) == value
 
     genres = crud_in_memory.get_genres()
-    assert len(genres) == 3
-    assert genres[-1].name == "Science Fiction"
+    assert len(genres) == len(GENRES) + 1
+    for key, value in new_genre.items():
+        assert getattr(genres[-1], key) == value
 
 
 def test_get_directors(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, _ = crud_session_in_memory
+    crud_in_memory, session = crud_session_in_memory
 
     directors = crud_in_memory.get_directors()
-    assert len(directors) == 3
+    assert len(directors) == len(DIRECTORS)
     for director, expected in zip(directors, DIRECTORS):
         for key, value in expected.items():
             assert getattr(director, key) == value
@@ -86,23 +88,89 @@ def test_get_directors(crud_session_in_memory: Tuple[Crud, Session]):
 def test_add_director(crud_session_in_memory: Tuple[Crud, Session]):
     crud_in_memory, _ = crud_session_in_memory
 
-    director = crud_in_memory.add_director(
-        "Lana",
-        "Wachowski",
-        19650321,
-        None,
-        "USA",
-    )
-    assert director.first_name == "Lana"
-    assert director.last_name == "Wachowski"
-    assert director.birth_date == 19650321
-    assert director.death_date is None
-    assert director.country_of_origin == "USA"
+    new_director = {
+        "first_name": "Lana",
+        "last_name": "Wachowski",
+        "birth_date": 19650621,
+        "death_date": None,
+        "country_of_origin": "USA"
+    }
+
+    director = crud_in_memory.add_director(**new_director)
+
+    for key, value in new_director.items():
+        assert getattr(director, key) == value
 
     directors = crud_in_memory.get_directors()
-    assert len(directors) == 4
-    assert directors[-1].first_name == "Lana"
-    assert directors[-1].last_name == "Wachowski"
-    assert directors[-1].birth_date == 19650321
-    assert directors[-1].death_date is None
-    assert directors[-1].country_of_origin == "USA"
+    assert len(directors) == len(DIRECTORS) + 1
+    for key, value in new_director.items():
+        assert getattr(directors[-1], key) == value
+
+
+def test_get_reviews(crud_session_in_memory: Tuple[Crud, Session]):
+    crud_in_memory, session = crud_session_in_memory
+
+    reviews = crud_in_memory.get_reviews()
+    assert len(reviews) == len(REVIEW)
+    for review, expected in zip(reviews, REVIEW):
+        for key, value in expected.items():
+            assert getattr(review, key) == value
+
+    review = crud_in_memory.get_reviews(1)
+    for key, value in REVIEW[0].items():
+        assert getattr(review[0], key) == value
+
+
+def test_add_review(crud_session_in_memory: Tuple[Crud, Session]):
+    crud_in_memory, _ = crud_session_in_memory
+
+    new_review = {
+        "rating": 4,
+        "review": "Good movie",
+        "movie_id": 1,
+        "user_id": 1
+    }
+
+    review = crud_in_memory.add_review(**new_review)
+
+    for key, value in new_review.items():
+        assert getattr(review, key) == value
+
+    reviews = crud_in_memory.get_reviews()
+    assert len(reviews) == len(REVIEW) + 1
+    for key, value in new_review.items():
+        assert getattr(reviews[-1], key) == value
+
+
+def test_get_users(crud_session_in_memory: Tuple[Crud, Session]):
+    crud_in_memory, session = crud_session_in_memory
+
+    users = crud_in_memory.get_users()
+    assert len(users) == len(USER)
+    for user, expected in zip(users, USER):
+        for key, value in expected.items():
+            assert getattr(user, key) == value
+
+    user = crud_in_memory.get_users(1)
+    for key, value in USER[0].items():
+        assert getattr(user[0], key) == value
+
+
+def test_add_user(crud_session_in_memory: Tuple[Crud, Session]):
+    crud_in_memory, _ = crud_session_in_memory
+
+    new_user = {
+        "username": "user2",
+        "email": "email2",
+        "password": "password2"
+    }
+
+    user = crud_in_memory.add_user(**new_user)
+
+    for key, value in new_user.items():
+        assert getattr(user, key) == value
+
+    users = crud_in_memory.get_users()
+    assert len(users) == len(USER) + 1
+    for key, value in new_user.items():
+        assert getattr(users[-1], key) == value

@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from api.crud.crud import Crud
-from api.crud.models import Movie, Genre, Director
+from api.crud.models import Movie, Genre, Director, User, Review
 from api.crud.tests.populate import populate
 
 
@@ -22,4 +22,6 @@ def crud_session_in_memory():
     populate(session, Movie)
     populate(session, Genre)
     populate(session, Director)
+    populate(session, User)
+    populate(session, Review)
     yield (crud, session)
