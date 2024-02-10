@@ -167,6 +167,14 @@ class Crud:
         Returns:
             Review: The newly added Review object.
         """
+        if not isinstance(rating, int):
+            raise TypeError(f"Expected int, got {type(rating).__name__}")
+        if not isinstance(review, str):
+            raise TypeError(f"Expected str, got {type(review).__name__}")
+        if not isinstance(movie_id, int):
+            raise TypeError(f"Expected int, got {type(movie_id).__name__}")
+        if not isinstance(user_id, int):
+            raise TypeError(f"Expected int, got {type(user_id).__name__}")
         return self._add(Review(
                         rating=rating,
                         review=review,

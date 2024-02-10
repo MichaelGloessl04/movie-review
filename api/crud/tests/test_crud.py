@@ -200,6 +200,30 @@ def test_add_review(crud_in_memory: Crud):
         assert getattr(reviews[-1], key) == value
 
 
+def test_add_invalid_review(crud_in_memory: Crud):
+    review = {
+        "rating": "int",
+        "review": "str",
+        "movie_id": "int",
+        "user_id": "int"
+    }
+
+    for key, value in review.items():
+        good_review = {
+            "rating": 4,
+            "review": "Good movie",
+            "movie_id": 1,
+            "user_id": 1
+        }
+        for bad_key, bad_value in BADVALUES.items():
+            if value != bad_key:
+                good_review[key] = bad_value
+                with pytest.raises(TypeError):
+                    crud_in_memory.add_review(**good_review)
+            else:
+                continue
+
+
 def test_get_users(crud_in_memory: Crud):
     users = crud_in_memory.get_users()
     assert len(users) == len(USER)
