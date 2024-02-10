@@ -1,5 +1,17 @@
+import pytest
 from api.crud.crud import Crud
 from api.crud.tests.populate import MOVIES, GENRES, DIRECTORS, USER, REVIEW
+
+BADVALUES = {
+    "str": "string",
+    "int": 1,
+    "float": 1.0,
+    "none": None,
+    "list": ["list"],
+    "dict": {"dict": "dict"},
+    "tuple": ("tuple",)
+}
+
 
 
 def test_get_movies(crud_in_memory: Crud):
@@ -32,6 +44,32 @@ def test_add_movie(crud_in_memory: Crud):
     assert len(movies) == len(MOVIES) + 1
     for key, value in new_movie.items():
         assert getattr(movies[-1], key) == value
+
+
+def test_add_invalid_movie(crud_in_memory: Crud):
+    movie = {
+        "name": "str",
+        "poster_file": "str",
+        "release_date": "int",
+        "genre_id": "int",
+        "director_id": "int"
+    }
+
+    for key, value in movie.items():
+        good_movie = {
+            "name": "The Matrix",
+            "poster_file": "the_matrix.jpg",
+            "release_date": 19990331,
+            "genre_id": 1,
+            "director_id": 1
+        }
+        for bad_key, bad_value in BADVALUES.items():
+            if value != bad_key:
+                good_movie[key] = bad_value
+                with pytest.raises(TypeError):
+                    crud_in_memory.add_movie(**good_movie)
+            else:
+                continue
 
 
 def test_get_genres(crud_in_memory: Crud):
