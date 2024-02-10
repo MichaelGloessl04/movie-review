@@ -35,7 +35,7 @@ class Director(Base):
     first_name: Mapped[str]
     last_name: Mapped[str]
     birth_date: Mapped[int]
-    death_date: Mapped[int]
+    death_date: Mapped[int] = mapped_column(nullable=True)
     country_of_origin: Mapped[str]
 
 
