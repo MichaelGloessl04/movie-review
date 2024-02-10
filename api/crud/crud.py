@@ -119,6 +119,17 @@ class Crud:
         Returns:
             Director: The newly added Director object.
         """
+        if not isinstance(first_name, str):
+            raise TypeError(f"Expected str, got {type(first_name).__name__}")
+        if not isinstance(last_name, str):
+            raise TypeError(f"Expected str, got {type(last_name).__name__}")
+        if not isinstance(birth_date, int):
+            raise TypeError(f"Expected int, got {type(birth_date).__name__}")
+        if not isinstance(death_date, int):
+            raise TypeError(f"Expected int, got {type(death_date).__name__}")
+        if not isinstance(country_of_origin, str):
+            raise TypeError(f"Expected str, got {
+                type(country_of_origin).__name__}")
         return self._add(Director(
                         first_name=first_name,
                         last_name=last_name,

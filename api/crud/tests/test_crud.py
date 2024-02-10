@@ -143,6 +143,32 @@ def test_add_director(crud_in_memory: Crud):
         assert getattr(directors[-1], key) == value
 
 
+def test_add_invalid_director(crud_in_memory: Crud):
+    director = {
+        "first_name": "str",
+        "last_name": "str",
+        "birth_date": "int",
+        "death_date": "int",
+        "country_of_origin": "str"
+    }
+
+    for key, value in director.items():
+        good_director = {
+            "first_name": "Lana",
+            "last_name": "Wachowski",
+            "birth_date": 19650621,
+            "death_date": None,
+            "country_of_origin": "USA"
+        }
+        for bad_key, bad_value in BADVALUES.items():
+            if value != bad_key:
+                good_director[key] = bad_value
+                with pytest.raises(TypeError):
+                    crud_in_memory.add_director(**good_director)
+            else:
+                continue
+
+
 def test_get_reviews(crud_in_memory: Crud):
     reviews = crud_in_memory.get_reviews()
     assert len(reviews) == len(REVIEW)
