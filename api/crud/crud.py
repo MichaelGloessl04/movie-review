@@ -43,6 +43,16 @@ class Crud:
         Returns:
             Movie: The newly added Movie object.
         """
+        if not isinstance(name, str):
+            raise TypeError(f"Expected str, got {type(name).__name__}")
+        if not isinstance(poster_file, str):
+            raise TypeError(f"Expected str, got {type(poster_file).__name__}")
+        if not isinstance(release_date, int):
+            raise TypeError(f"Expected int, got {type(release_date).__name__}")
+        if not isinstance(genre_id, int):
+            raise TypeError(f"Expected int, got {type(genre_id).__name__}")
+        if not isinstance(director_id, int):
+            raise TypeError(f"Expected int, got {type(director_id).__name__}")
         return self._add(Movie(
                         name=name,
                         poster_file=poster_file,
