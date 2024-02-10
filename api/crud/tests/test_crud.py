@@ -252,3 +252,25 @@ def test_add_user(crud_in_memory: Crud):
     assert len(users) == len(USER) + 1
     for key, value in new_user.items():
         assert getattr(users[-1], key) == value
+
+
+def test_add_invalid_user(crud_in_memory: Crud):
+    user = {
+        "username": "str",
+        "email": "str",
+        "password": "str"
+    }
+
+    for key, value in user.items():
+        good_user = {
+            "username": "user2",
+            "email": "email2",
+            "password": "password2"
+        }
+        for bad_key, bad_value in BADVALUES.items():
+            if value != bad_key:
+                good_user[key] = bad_value
+                with pytest.raises(TypeError):
+                    crud_in_memory.add_user(**good_user)
+            else:
+                continue

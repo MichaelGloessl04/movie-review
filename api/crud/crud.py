@@ -206,6 +206,12 @@ class Crud:
         Returns:
             User: The newly added User object.
         """
+        if not isinstance(username, str):
+            raise TypeError(f"Expected str, got {type(username).__name__}")
+        if not isinstance(email, str):
+            raise TypeError(f"Expected str, got {type(email).__name__}")
+        if not isinstance(password, str):
+            raise TypeError(f"Expected str, got {type(password).__name__}")
         return self._add(User(
                         username=username,
                         email=email,
