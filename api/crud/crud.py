@@ -1,3 +1,4 @@
+from types import NoneType
 from sqlalchemy.orm import Session
 from api.crud.models import Base, Movie, Genre, Director, Review, User
 
@@ -125,8 +126,9 @@ class Crud:
             raise TypeError(f"Expected str, got {type(last_name).__name__}")
         if not isinstance(birth_date, int):
             raise TypeError(f"Expected int, got {type(birth_date).__name__}")
-        if not isinstance(death_date, int):
-            raise TypeError(f"Expected int, got {type(death_date).__name__}")
+        if not isinstance(death_date, (int, NoneType)):
+            raise TypeError(f"Expected int or NoneType, got {
+                type(death_date).__name__}")
         if not isinstance(country_of_origin, str):
             raise TypeError(f"Expected str, got {
                 type(country_of_origin).__name__}")
