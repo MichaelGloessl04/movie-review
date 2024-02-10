@@ -1,13 +1,8 @@
-from typing import Tuple
-from sqlalchemy.orm import Session
-
 from api.crud.crud import Crud
 from api.crud.tests.populate import MOVIES, GENRES, DIRECTORS, USER, REVIEW
 
 
-def test_get_movies(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, session = crud_session_in_memory
-
+def test_get_movies(crud_in_memory: Crud):
     movies = crud_in_memory.get_movies()
     assert len(movies) == len(MOVIES)
     for movie, expected in zip(movies, MOVIES):
@@ -19,9 +14,7 @@ def test_get_movies(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(movie[0], key) == value
 
 
-def test_add_movie(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, _ = crud_session_in_memory
-
+def test_add_movie(crud_in_memory: Crud):
     new_movie = {
         "name": "The Matrix",
         "poster_file": "the_matrix.jpg",
@@ -41,9 +34,7 @@ def test_add_movie(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(movies[-1], key) == value
 
 
-def test_get_genres(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, session = crud_session_in_memory
-
+def test_get_genres(crud_in_memory: Crud):
     genres = crud_in_memory.get_genres()
     assert len(genres) == len(GENRES)
     for genre, expected in zip(genres, GENRES):
@@ -55,9 +46,7 @@ def test_get_genres(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(genre[0], key) == value
 
 
-def test_add_genre(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, _ = crud_session_in_memory
-
+def test_add_genre(crud_in_memory: Crud):
     new_genre = {"name": "Sci-Fi"}
 
     genre = crud_in_memory.add_genre(**new_genre)
@@ -71,9 +60,7 @@ def test_add_genre(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(genres[-1], key) == value
 
 
-def test_get_directors(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, session = crud_session_in_memory
-
+def test_get_directors(crud_in_memory: Crud):
     directors = crud_in_memory.get_directors()
     assert len(directors) == len(DIRECTORS)
     for director, expected in zip(directors, DIRECTORS):
@@ -85,9 +72,7 @@ def test_get_directors(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(director[0], key) == value
 
 
-def test_add_director(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, _ = crud_session_in_memory
-
+def test_add_director(crud_in_memory: Crud):
     new_director = {
         "first_name": "Lana",
         "last_name": "Wachowski",
@@ -107,9 +92,7 @@ def test_add_director(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(directors[-1], key) == value
 
 
-def test_get_reviews(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, session = crud_session_in_memory
-
+def test_get_reviews(crud_in_memory: Crud):
     reviews = crud_in_memory.get_reviews()
     assert len(reviews) == len(REVIEW)
     for review, expected in zip(reviews, REVIEW):
@@ -121,9 +104,7 @@ def test_get_reviews(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(review[0], key) == value
 
 
-def test_add_review(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, _ = crud_session_in_memory
-
+def test_add_review(crud_in_memory: Crud):
     new_review = {
         "rating": 4,
         "review": "Good movie",
@@ -142,9 +123,7 @@ def test_add_review(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(reviews[-1], key) == value
 
 
-def test_get_users(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, session = crud_session_in_memory
-
+def test_get_users(crud_in_memory: Crud):
     users = crud_in_memory.get_users()
     assert len(users) == len(USER)
     for user, expected in zip(users, USER):
@@ -156,9 +135,7 @@ def test_get_users(crud_session_in_memory: Tuple[Crud, Session]):
         assert getattr(user[0], key) == value
 
 
-def test_add_user(crud_session_in_memory: Tuple[Crud, Session]):
-    crud_in_memory, _ = crud_session_in_memory
-
+def test_add_user(crud_in_memory: Crud):
     new_user = {
         "username": "user2",
         "email": "email2",

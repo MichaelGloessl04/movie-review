@@ -11,17 +11,10 @@ from api.crud.tests.populate import populate
 def crud_in_memory():
     engine = create_engine("sqlite:///:memory:")
     crud = Crud(engine)
-    yield crud
-
-
-@pytest.fixture(scope="function")
-def crud_session_in_memory():
-    engine = create_engine("sqlite:///:memory:")
-    crud = Crud(engine)
     session = sessionmaker(bind=engine)
     populate(session, Movie)
     populate(session, Genre)
     populate(session, Director)
     populate(session, User)
     populate(session, Review)
-    yield (crud, session)
+    yield crud
