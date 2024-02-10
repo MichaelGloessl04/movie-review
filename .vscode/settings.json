@@ -1,5 +1,13 @@
 {
     "cSpell.words": [
+        "autoflush",
+        "sessionmaker",
+        "Shawshank",
         "sqlalchemy"
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "api"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
