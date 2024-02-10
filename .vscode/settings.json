@@ -4,7 +4,8 @@
         "Darabont",
         "sessionmaker",
         "Shawshank",
-        "sqlalchemy"
+        "sqlalchemy",
+        "Wachowski"
     ],
     "python.testing.pytestArgs": [
         "api"

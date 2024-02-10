@@ -75,6 +75,45 @@ class Crud:
         """
         return self._add(Genre(name=name))
 
+    def get_directors(self, id: int = None) -> list[Director]:
+        """
+        Retrieves a list of directors from the database.
+
+        Args:
+            id (int, optional): The ID of the director to retrieve.
+            Defaults to None.
+
+        Returns:
+            list[Director]: A list of Director objects.
+        """
+        return self._get(Director, id)
+
+    def add_director(self,
+                     first_name: str,
+                     last_name: str,
+                     birth_date: int,
+                     death_date: int,
+                     country_of_origin: str) -> Director:
+        """
+        Adds a new director to the database.
+
+        Args:
+            first_name (str): The first name of the director.
+            last_name (str): The last name of the director.
+            birth_date (int): The birth date of the director.
+            death_date (int): The death date of the director.
+            country_of_origin (str): The country of origin of the director.
+
+        Returns:
+            Director: The newly added Director object.
+        """
+        return self._add(Director(
+                        first_name=first_name,
+                        last_name=last_name,
+                        birth_date=birth_date,
+                        death_date=death_date,
+                        country_of_origin=country_of_origin))
+
     def _add(self, obj: Base):
         with Session(self._engine) as session:
             session.add(obj)
