@@ -83,6 +83,8 @@ class Crud:
         Returns:
             Genre: The newly added Genre object.
         """
+        if not isinstance(name, str):
+            raise TypeError(f"Expected str, got {type(name).__name__}")
         return self._add(Genre(name=name))
 
     def get_directors(self, id: int = None) -> list[Director]:

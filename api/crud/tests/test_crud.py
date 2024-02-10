@@ -13,7 +13,6 @@ BADVALUES = {
 }
 
 
-
 def test_get_movies(crud_in_memory: Crud):
     movies = crud_in_memory.get_movies()
     assert len(movies) == len(MOVIES)
@@ -96,6 +95,20 @@ def test_add_genre(crud_in_memory: Crud):
     assert len(genres) == len(GENRES) + 1
     for key, value in new_genre.items():
         assert getattr(genres[-1], key) == value
+
+
+def test_add_invalid_genre(crud_in_memory: Crud):
+    genre = {"name": "str"}
+
+    for key, value in genre.items():
+        good_genre = {"name": "Sci-Fi"}
+        for bad_key, bad_value in BADVALUES.items():
+            if value != bad_key:
+                good_genre[key] = bad_value
+                with pytest.raises(TypeError):
+                    crud_in_memory.add_genre(**good_genre)
+            else:
+                continue
 
 
 def test_get_directors(crud_in_memory: Crud):
