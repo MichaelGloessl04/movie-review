@@ -162,6 +162,10 @@ def test_add_invalid_user(crud_in_memory: Crud):
     _test_add_invalid(user, good_user, crud_in_memory.add_user)
 
 
+def test_remove_user(crud_in_memory: Crud):
+    _test_remove(crud_in_memory.remove_user, crud_in_memory.get_users, USER)
+
+
 def _test_get(func, reference):
     all_entities = func()
     assert len(all_entities) == len(reference)
