@@ -3,6 +3,8 @@
         "autoflush",
         "BADVALUES",
         "Darabont",
+        "fastapi",
+        "pydantic",
         "sessionmaker",
         "Shawshank",
         "sqlalchemy",
