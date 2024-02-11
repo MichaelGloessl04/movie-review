@@ -1,6 +1,6 @@
 from types import NoneType
 from sqlalchemy.orm import Session
-from api.crud.models import Base, Movie, Genre, Director, Review, User
+from backend.crud.models import Base, Movie, Genre, Director, Review, User
 
 
 class Crud:

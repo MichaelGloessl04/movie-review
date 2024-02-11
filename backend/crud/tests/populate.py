@@ -1,4 +1,4 @@
-from api.crud.models import Movie, Genre, Director, User, Review
+from backend.crud.models import Movie, Genre, Director, User, Review
 
 MOVIES = [
         {
