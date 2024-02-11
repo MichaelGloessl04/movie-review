@@ -183,6 +183,15 @@ class Crud:
                         movie_id=movie_id,
                         user_id=user_id))
 
+    def remove_review(self, id: int) -> None:
+        """
+        Removes a review from the database.
+
+        Args:
+            id (int): The ID of the review to remove.
+        """
+        self._remove(Review, id)
+
     def get_users(self, id: int = None) -> list[User]:
         """
         Retrieves a list of users from the database.
@@ -219,6 +228,15 @@ class Crud:
                         email=email,
                         password=password))
 
+    def remove_user(self, id: int):
+        """
+        Removes a user from the database.
+
+        Args:
+            id (int): The ID of the user to remove.
+        """
+        self._remove(User, id)
+
     def _add(self, obj: Base):
         with Session(self._engine) as session:
             session.add(obj)
@@ -232,3 +250,8 @@ class Crud:
                 return session.query(obj).filter(obj.id == id).all()
             else:
                 return session.query(obj).all()
+
+    def _remove(self, obj: Base, id: int):
+        with Session(self._engine) as session:
+            session.query(obj).filter(obj.id == id).delete()
+            session.commit()
