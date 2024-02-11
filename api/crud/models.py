@@ -15,13 +15,6 @@ class Movie(Base):
     genre_id: Mapped[int] = mapped_column(ForeignKey('genre.id'))
     director_id: Mapped[int] = mapped_column(ForeignKey('director.id'))
 
-    def __repr__(self) -> str:
-        return f'Movie(id={self.id!r}, name={self.name!r}, ' \
-                f'poster_file={self.poster_file!r}, ' \
-                f'release_date={self.release_date!r}, ' \
-                f'genre_id={self.genre_id!r}, ' \
-                f'director_id={self.director_id!r})'
-
 
 class Genre(Base):
     __tablename__ = 'genre'

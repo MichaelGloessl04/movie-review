@@ -130,6 +130,11 @@ def test_add_invalid_review(crud_in_memory: Crud):
     _test_add_invalid(review, good_review, crud_in_memory.add_review)
 
 
+def test_remove_review(crud_in_memory: Crud):
+    _test_remove(crud_in_memory.remove_review, crud_in_memory.get_reviews,
+                 REVIEW)
+
+
 def test_get_users(crud_in_memory: Crud):
     _test_get(crud_in_memory.get_users, USER)
 
@@ -164,9 +169,8 @@ def _test_get(func, reference):
         for key, value in expected.items():
             assert getattr(movie, key) == value
 
-    entity = func(1)
     for key, value in reference[0].items():
-        assert getattr(entity[0], key) == value
+        assert getattr(func(1)[0], key) == value
 
 
 def _test_add(add_func, get_func, new_entity):
@@ -191,3 +195,9 @@ def _test_add_invalid(map, good_entity, func):
                     good_entity[key] = bad_value
                     with pytest.raises(TypeError):
                         func(**good_entity)
+
+
+def _test_remove(remove_func, get_func, reference):
+    assert len(get_func()) == len(reference)
+    remove_func(1)
+    assert len(get_func()) == len(reference) - 1

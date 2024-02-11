@@ -183,6 +183,17 @@ class Crud:
                         movie_id=movie_id,
                         user_id=user_id))
 
+    def remove_review(self, id: int) -> None:
+        """
+        Removes a review from the database.
+
+        Args:
+            id (int): The ID of the review to remove.
+        """
+        with Session(self._engine) as session:
+            session.query(Review).filter(Review.id == id).delete()
+            session.commit()
+
     def get_users(self, id: int = None) -> list[User]:
         """
         Retrieves a list of users from the database.
