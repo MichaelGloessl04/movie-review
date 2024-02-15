@@ -3,13 +3,15 @@
         "autoflush",
         "BADVALUES",
         "Darabont",
+        "fastapi",
+        "pydantic",
         "sessionmaker",
         "Shawshank",
         "sqlalchemy",
         "Wachowski"
     ],
     "python.testing.pytestArgs": [
-        "api"
+        "backend"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true
