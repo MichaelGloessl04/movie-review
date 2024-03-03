@@ -11,7 +11,7 @@
         "Wachowski"
     ],
     "python.testing.pytestArgs": [
-        "movie-review-backend"
+        "backend"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true
