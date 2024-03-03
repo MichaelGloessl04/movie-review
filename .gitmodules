@@ -1,6 +1,6 @@
 [submodule "movie-review-backend"]
-	path = movie-review-backend
+	path = backend
 	url = https://github.com/MichaelGloessl04/movie-review-backend
 [submodule "movie-review-frontend"]
-	path = movie-review-frontend
+	path = frontend
 	url = https://github.com/MichaelGloessl04/movie-review-frontend
