@@ -8,6 +8,7 @@
         "fastapi",
         "Glfcm",
         "Ijoxf",
+        "MOVIEGENRE",
         "pydantic",
         "sessionmaker",
         "Shawshank",
